@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 from fastapi import Depends, FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy import select
@@ -6,11 +8,20 @@ from sqlalchemy.orm import Session
 from app.assistants import router as assistants_router
 from app.auth import router as auth_router
 from app.config import settings
-from app.database import get_db
+from app.database import SessionLocal, get_db
 from app.models import Greeting
 from app.schemas import GreetingOut
+from app.seed import seed_demo_data
 
-app = FastAPI(title="Train.me API")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    with SessionLocal() as db:
+        seed_demo_data(db)
+    yield
+
+
+app = FastAPI(title="Train.me API", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
