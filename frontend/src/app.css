@@ -1,0 +1,27 @@
+:root {
+    --pink: #FF52A2;
+    --bg-color: #FAFAFA;
+    --text-dark: #111;
+    --border-gray: #d1d5db;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+.highlight {
+    color: var(--pink);
+}
