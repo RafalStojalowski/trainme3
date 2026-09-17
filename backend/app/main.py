@@ -24,6 +24,11 @@ app.include_router(auth_router)
 app.include_router(assistants_router)
 
 
+@app.get("/healthz")
+def healthz():
+    return {"status": "ok"}
+
+
 @app.get("/api/greeting", response_model=GreetingOut)
 def get_greeting(db: Session = Depends(get_db)):
     greeting = db.scalar(select(Greeting).limit(1))
