@@ -1,4 +1,5 @@
 <script>
+  import { API_BASE } from "./lib/api.js";
   import AuthCard from "./lib/AuthCard.svelte";
   import AssistantsPage from "./lib/AssistantsPage.svelte";
   import LocationsPage from "./lib/LocationsPage.svelte";
@@ -43,7 +44,7 @@
 
   async function loadSession() {
     try {
-      const res = await fetch("/api/auth/me", { credentials: "include" });
+      const res = await fetch(`${API_BASE}/api/auth/me`, { credentials: "include" });
       if (res.ok) {
         user = await res.json();
       }
@@ -53,7 +54,7 @@
   }
 
   async function handleLogout() {
-    await fetch("/api/auth/logout", { method: "POST", credentials: "include" });
+    await fetch(`${API_BASE}/api/auth/logout`, { method: "POST", credentials: "include" });
     user = null;
   }
 

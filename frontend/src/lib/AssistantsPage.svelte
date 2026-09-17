@@ -1,4 +1,6 @@
 <script>
+  import { API_BASE } from "./api.js";
+
   let { onBack } = $props();
 
   let assistants = $state([]);
@@ -63,9 +65,9 @@
     loading = true;
     try {
       const [assistantsRes, usageRes, locationsRes] = await Promise.all([
-        fetch("/api/assistants", { credentials: "include" }),
-        fetch("/api/usage/me", { credentials: "include" }),
-        fetch("/api/locations", { credentials: "include" }),
+        fetch(`${API_BASE}/api/assistants`, { credentials: "include" }),
+        fetch(`${API_BASE}/api/usage/me`, { credentials: "include" }),
+        fetch(`${API_BASE}/api/locations`, { credentials: "include" }),
       ]);
 
       if (assistantsRes.ok) {
@@ -90,7 +92,7 @@
   }
 
   async function patchAssistant(id, payload) {
-    const res = await fetch(`/api/assistants/${id}`, {
+    const res = await fetch(`${API_BASE}/api/assistants/${id}`, {
       method: "PATCH",
       credentials: "include",
       headers: { "Content-Type": "application/json" },

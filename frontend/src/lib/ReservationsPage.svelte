@@ -1,6 +1,7 @@
 <script>
   import { fade, fly, slide } from "svelte/transition";
   import { cubicInOut } from "svelte/easing";
+  import { API_BASE } from "./api.js";
 
   let { onBack } = $props();
 
@@ -20,7 +21,7 @@
   async function load() {
     loading = true;
     try {
-      const res = await fetch("/api/reservations", { credentials: "include" });
+      const res = await fetch(`${API_BASE}/api/reservations`, { credentials: "include" });
       if (res.ok) {
         reservations = await res.json();
       }

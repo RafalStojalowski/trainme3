@@ -4,6 +4,7 @@
   import { cubicInOut } from "svelte/easing";
   import L from "leaflet";
   import "leaflet/dist/leaflet.css";
+  import { API_BASE } from "./api.js";
 
   const LAYOUT_TRANSITION_MS = 500;
 
@@ -97,7 +98,7 @@
   async function loadLocations() {
     loading = true;
     try {
-      const res = await fetch("/api/locations", { credentials: "include" });
+      const res = await fetch(`${API_BASE}/api/locations`, { credentials: "include" });
       if (res.ok) {
         locations = await res.json();
         renderMarkers();
@@ -222,7 +223,7 @@
     savingRoom = true;
     editRoomError = "";
     try {
-      const res = await fetch(`/api/rooms/${editingRoomId}`, {
+      const res = await fetch(`${API_BASE}/api/rooms/${editingRoomId}`, {
         method: "PUT",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -274,7 +275,7 @@
     savingLocationDetails = true;
     editLocationError = "";
     try {
-      const res = await fetch(`/api/locations/${editingLocationId}`, {
+      const res = await fetch(`${API_BASE}/api/locations/${editingLocationId}`, {
         method: "PUT",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -306,7 +307,7 @@
     cancelEditLocationDetails();
     resetAddLocationForm();
     try {
-      const res = await fetch(`/api/locations/${location.id}`, { credentials: "include" });
+      const res = await fetch(`${API_BASE}/api/locations/${location.id}`, { credentials: "include" });
       if (res.ok) {
         detailLocation = await res.json();
         // Poczekaj aż animacja przesunięcia/zmiany rozmiaru mapy się zakończy,
@@ -348,7 +349,7 @@
     addingRoom = true;
     addRoomError = "";
     try {
-      const res = await fetch(`/api/locations/${detailLocation.id}/rooms`, {
+      const res = await fetch(`${API_BASE}/api/locations/${detailLocation.id}/rooms`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -396,7 +397,7 @@
     addingLocation = true;
     addLocationError = "";
     try {
-      const res = await fetch("/api/locations", {
+      const res = await fetch(`${API_BASE}/api/locations`, {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
@@ -432,7 +433,7 @@
     if (!detailLocation) return;
     deletingRoom = true;
     try {
-      const res = await fetch(`/api/rooms/${roomId}`, { method: "DELETE", credentials: "include" });
+      const res = await fetch(`${API_BASE}/api/rooms/${roomId}`, { method: "DELETE", credentials: "include" });
       if (res.ok) {
         detailLocation = { ...detailLocation, rooms: detailLocation.rooms.filter((room) => room.id !== roomId) };
       }

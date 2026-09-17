@@ -1,4 +1,6 @@
 <script>
+  import { API_BASE } from "./api.js";
+
   let { onLoggedIn } = $props();
 
   let mode = $state("login"); // "login" | "register"
@@ -15,7 +17,7 @@
   }
 
   async function postJson(url, body) {
-    return fetch(url, {
+    return fetch(`${API_BASE}${url}`, {
       method: "POST",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
